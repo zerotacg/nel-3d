@@ -1,7 +1,15 @@
+import CTileBank from "nel/3d/landscape/c_tile_bank";
+import CTileFarBank from "nel/3d/landscape/c_tile_far_bank";
+
 /**
  * @class nl3d.landscape.CLandscape
  */
 export default class CLandscape {
+    constructor() {
+        this.tile_bank = new CTileBank();
+        this.tile_far_bank = new CTileFarBank();
+    }
+
     /**
      * @method
      * @param {number} threshold

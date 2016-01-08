@@ -5,7 +5,6 @@ import jspm from "jspm";
 
 chai.use(sinonChai);
 
-
 var System = jspm.Loader();
 
 describe("nel.3d.landscape.CLandscapeUser", function () {
@@ -34,10 +33,6 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
 
     beforeEach("setup", function () {
         landscape = new CLandscape();
-        sinon.stub(landscape, "setThreshold");
-        sinon.stub(landscape, "setZFunction");
-        sinon.stub(landscape, "setupStaticLight");
-        sinon.stub(landscape, "releaseAllTiles");
 
         landscape_model = {
             landscape
@@ -63,6 +58,10 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
     });
 
     describe("#setThreshold()", function () {
+        beforeEach("setup", function () {
+            sinon.stub(landscape, "setThreshold");
+        });
+
         it("should set the threshold of the model", function () {
             var threshold = 0.0005;
 
@@ -73,6 +72,10 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
     });
 
     describe("#setZFunction()", function () {
+        beforeEach("setup", function () {
+            sinon.stub(landscape, "setZFunction");
+        });
+
         it("should set the threshold of the model", function () {
             var z_function = "z function";
 
@@ -83,6 +86,10 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
     });
 
     describe("#setupStaticLight()", function () {
+        beforeEach("setup", function () {
+            sinon.stub(landscape, "setupStaticLight");
+        });
+
         it("should call setup of static light on the model", function () {
             var diffuse = {};
             var ambient = {};
@@ -95,13 +102,80 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
     });
 
     describe("#loadBankFiles()", function () {
-        it("should call releasing of tiles on model", function () {
-            var small_bank = "jungle_su.smallbank";
-            var far_bank = "jungle_su.farbank";
+        var small_bank;
+        var far_bank;
 
+        beforeEach("setup", function () {
+            small_bank = "jungle_su.smallbank";
+            far_bank = "jungle_su.farbank";
+
+            sinon.stub(landscape, "releaseAllTiles");
+            sinon.stub(landscape.tile_bank, "clear");
+            sinon.stub(landscape.tile_bank, "readFrom");
+            sinon.stub(landscape.tile_bank, "makeAllPathsRelative");
+            sinon.stub(landscape.tile_bank, "makeAllExtensionsDDS");
+            sinon.stub(landscape.tile_bank, "setAbsPath");
+            sinon.stub(landscape.tile_far_bank, "readFrom");
+
+            landscape_user.path = {
+                lookup: sinon.spy()
+            };
+        });
+
+        it("should call releasing of tiles on model", function () {
             landscape_user.loadBankFiles(small_bank, far_bank);
 
             expect(landscape.releaseAllTiles).to.have.been.called;
+        });
+
+        it("should clear the tile bank", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_bank.clear).to.have.been.called;
+        });
+
+        it("should serialize the tile bank", function () {
+            var stream = "stream";
+            landscape_user.path = {
+                lookup: function() {
+                    return stream;
+                }
+            };
+
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_bank.readFrom).to.have.been.calledWith(stream);
+        });
+
+        it("should call makeAllPathsRelative", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_bank.makeAllPathsRelative).to.have.been.called;
+        });
+
+        it("should call makeAllExtensionsDDS", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_bank.makeAllExtensionsDDS).to.have.been.called;
+        });
+
+        it("should set absolute path on tile bank to empty string", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_bank.setAbsPath).to.have.been.calledWith("");
+        });
+
+        it("should serialize the tile far bank", function () {
+            var stream = "stream";
+            landscape_user.path = {
+                lookup: function() {
+                    return stream;
+                }
+            };
+
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(landscape.tile_far_bank.readFrom).to.have.been.calledWith(stream);
         });
     });
 });

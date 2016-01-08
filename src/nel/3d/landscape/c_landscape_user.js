@@ -46,26 +46,25 @@ export default class CLandscapeUser {
 
     /**
      * @override
-     * @param {string} tile_bank_file
-     * @param {string} far_bank_file
+     * @param {string} tile_bank_filename
+     * @param {string} far_bank_filename
      */
-    loadBankFiles(){
-        this._model.landscape.releaseAllTiles();
-        //
-        //// Clear the bank
-        //_Landscape->Landscape.TileBank.clear ();
-        //
-        //// First, load the banks.
-        ////=======================
-        //CIFile bankFile(CPath::lookup(tileBankFile));
-        //_Landscape->Landscape.TileBank.serial(bankFile);
-        //// All textures path are relative!
-        //_Landscape->Landscape.TileBank.makeAllPathRelative();
-        //// Use DDS!!!
-        //_Landscape->Landscape.TileBank.makeAllExtensionDDS();
-        //// No absolute path
-        //_Landscape->Landscape.TileBank.setAbsPath ("");
-        //
+    loadBankFiles( tile_bank_filename, far_bank_filename ) {
+        var landscape = this._model.landscape;
+        var tile_bank = landscape.tile_bank;
+        var tile_bank_file = this.path.lookup(tile_bank_filename);
+        var tile_far_bank = landscape.tile_far_bank;
+        var tile_far_bank_file = this.path.lookup(far_bank_filename);
+
+        landscape.releaseAllTiles();
+
+        tile_bank.clear();
+        tile_bank.readFrom(tile_bank_file);
+        tile_bank.makeAllPathsRelative();
+        tile_bank.makeAllExtensionsDDS();
+        tile_bank.setAbsPath("");
+
+        tile_far_bank.readFrom(tile_far_bank_file);
         //CIFile farbankFile(CPath::lookup(farBankFile));
         //_Landscape->Landscape.TileFarBank.serial(farbankFile);
         //bankFile.close();

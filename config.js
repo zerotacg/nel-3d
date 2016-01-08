@@ -18,6 +18,7 @@ System.config({
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@1.2.6",
+    "nel/io": "github:nel-io@0.0.0/src/nel/io",
     "nel/misc": "github:nel-misc@0.0.0/src/nel/misc",
     "three": "github:mrdoob/three.js@master",
     "github:jspm/nodelibs-assert@0.1.0": {
