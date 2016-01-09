@@ -46,7 +46,9 @@
   },
   "jspm": {
     "dependencies": {
-      "three": "mrdoob/three.js@master"
+      "three": "mrdoob/three.js@master",
+      "nel-io": "zerotacg/nel-io@master",
+      "nel-misc": "zerotacg/nel-misc@master"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
