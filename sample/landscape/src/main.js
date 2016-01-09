@@ -53,7 +53,7 @@ function main() {
 
     /** @type {function(progress: number)} */
     var progress = (progress) => {
-        console.log("Progress: ", progress)
+        console.log("Progress: ", progress);
     };
     var zonesAdded;
     var zonesRemoved;
