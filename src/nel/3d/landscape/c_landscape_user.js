@@ -50,11 +50,12 @@ export default class CLandscapeUser {
      * @param {string} far_bank_filename
      */
     loadBankFiles( tile_bank_filename, far_bank_filename ) {
+        var path = this.path;
         var landscape = this._model.landscape;
         var tile_bank = landscape.tile_bank;
-        var tile_bank_file = this.path.lookup(tile_bank_filename);
+        var tile_bank_file = path.lookup(tile_bank_filename);
         var tile_far_bank = landscape.tile_far_bank;
-        var tile_far_bank_file = this.path.lookup(far_bank_filename);
+        var tile_far_bank_file = path.lookup(far_bank_filename);
 
         landscape.releaseAllTiles();
 
@@ -65,9 +66,7 @@ export default class CLandscapeUser {
         tile_bank.setAbsPath("");
 
         tile_far_bank.readFrom(tile_far_bank_file);
-        //CIFile farbankFile(CPath::lookup(farBankFile));
-        //_Landscape->Landscape.TileFarBank.serial(farbankFile);
-        //bankFile.close();
-        //farbankFile.close();
+        tile_bank_file.close();
+        tile_far_bank_file.close();
     }
 }

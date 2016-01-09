@@ -10,16 +10,19 @@ var System = jspm.Loader();
 describe("nel.3d.landscape.CLandscapeUser", function () {
     var CLandscape;
     var CLandscapeUser;
+    var CReadFile;
 
     before("imports", function ( done ) {
         var imports = [
             "nel/3d/landscape/c_landscape",
-            "nel/3d/landscape/c_landscape_user"
+            "nel/3d/landscape/c_landscape_user",
+            "nel/io/c_read_file"
         ];
         Promise.all(imports.map(path => System.import(path)))
             .then(modules => {
                 CLandscape = modules[ 0 ].default;
                 CLandscapeUser = modules[ 1 ].default;
+                CReadFile = modules[ 2 ].default;
             })
             .then(done)
             .catch(done)
@@ -103,7 +106,9 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
 
     describe("#loadBankFiles()", function () {
         var small_bank;
+        var small_bank_stream;
         var far_bank;
+        var far_bank_stream;
 
         beforeEach("setup", function () {
             small_bank = "jungle_su.smallbank";
@@ -117,9 +122,19 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
             sinon.stub(landscape.tile_bank, "setAbsPath");
             sinon.stub(landscape.tile_far_bank, "readFrom");
 
-            landscape_user.path = {
-                lookup: sinon.spy()
+            var path = {
+                lookup: function ( filename ) {
+                    return this[ filename ];
+                }
             };
+            small_bank_stream = new CReadFile();
+            sinon.stub(small_bank_stream, "close");
+            path[ small_bank ] = small_bank_stream;
+            far_bank_stream = new CReadFile();
+            sinon.stub(far_bank_stream, "close");
+            path[ far_bank ] = far_bank_stream;
+
+            landscape_user.path = path;
         });
 
         it("should call releasing of tiles on model", function () {
@@ -135,16 +150,9 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
         });
 
         it("should serialize the tile bank", function () {
-            var stream = "stream";
-            landscape_user.path = {
-                lookup: function() {
-                    return stream;
-                }
-            };
-
             landscape_user.loadBankFiles(small_bank, far_bank);
 
-            expect(landscape.tile_bank.readFrom).to.have.been.calledWith(stream);
+            expect(landscape.tile_bank.readFrom).to.have.been.calledWith(small_bank_stream);
         });
 
         it("should call makeAllPathsRelative", function () {
@@ -166,16 +174,21 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
         });
 
         it("should serialize the tile far bank", function () {
-            var stream = "stream";
-            landscape_user.path = {
-                lookup: function() {
-                    return stream;
-                }
-            };
-
             landscape_user.loadBankFiles(small_bank, far_bank);
 
-            expect(landscape.tile_far_bank.readFrom).to.have.been.calledWith(stream);
+            expect(landscape.tile_far_bank.readFrom).to.have.been.calledWith(far_bank_stream);
+        });
+
+        it("should close the tile bank file", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(small_bank_stream.close).to.have.been.called;
+        });
+
+        it("should close the tile bank file", function () {
+            landscape_user.loadBankFiles(small_bank, far_bank);
+
+            expect(far_bank_stream.close).to.have.been.called;
         });
     });
 });
