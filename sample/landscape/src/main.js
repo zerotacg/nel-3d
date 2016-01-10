@@ -25,7 +25,7 @@ var render = function () {
 
 //render();
 
-import CTileBank from "nel/3d/landscape/c_tile_bank";
+import CTileBank from "nel/3d/landscape/tile/c_tile_bank";
 import CSceneUser from "nel/3d/scene/c_scene_user";
 import ZFunction from "nel/3d/material/z_function";
 import CReadFile from "nel/io/c_read_file";
@@ -37,7 +37,9 @@ window.handleFiles = function ( files ) {
     var small_bank = window.small_bank = files.item(0);
     var tile_bank = window.tile_bank = new CTileBank();
     CReadFile.open(small_bank).then(stream => {
+        console.log("reading tile bank");
         tile_bank.readFrom(stream);
+        console.log("done reading tile bank");
     }).catch(console.error.bind(console, "error"));
 };
 

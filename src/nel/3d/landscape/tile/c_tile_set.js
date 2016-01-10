@@ -1,8 +1,8 @@
-import Bitmap from "nel/3d/landscape/bitmap";
-import CTileBorder from "nel/3d/landscape/c_tile_border";
-import CTileSetTransition from "nel/3d/landscape/c_tile_set_transition";
-import Displacement from "nel/3d/landscape/displacement";
-import Transition from "nel/3d/landscape/transition";
+import Bitmap from "nel/3d/landscape/tile/bitmap";
+import CTileBorder from "nel/3d/landscape/tile/c_tile_border";
+import CTileSetTransition from "nel/3d/landscape/tile/c_tile_set_transition";
+import Displacement from "nel/3d/landscape/tile/displacement";
+import Transition from "nel/3d/landscape/tile/transition";
 
 const VERSION = 5;
 

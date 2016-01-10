@@ -1,4 +1,4 @@
-import Bitmap from "nel/3d/landscape/bitmap";
+import Bitmap from "nel/3d/landscape/tile/bitmap";
 import Enum from "nel/misc/enum";
 
 /**

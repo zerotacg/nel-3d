@@ -3,14 +3,14 @@ import jspm from "jspm";
 
 var System = jspm.Loader();
 
-describe("nel.3d.landscape.CTileSet", function () {
+describe("nel.3d.landscape.tile.CTileSet", function () {
     var CTileBorder;
     var CTileSet;
 
     before("imports", function ( done ) {
         var imports = [
-            "nel/3d/landscape/c_tile_border",
-            "nel/3d/landscape/c_tile_set"
+            "nel/3d/landscape/tile/c_tile_border",
+            "nel/3d/landscape/tile/c_tile_set"
         ];
         Promise.all(imports.map(path => System.import(path)))
             .then(modules => {

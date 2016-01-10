@@ -7,7 +7,7 @@ chai.use(sinonChai);
 
 var System = jspm.Loader();
 
-describe("nel.3d.landscape.CTileBank", function () {
+describe("nel.3d.landscape.tile.CTileBank", function () {
     var CTileBank;
     var CTileNoise;
     var CBuffer;
@@ -16,8 +16,8 @@ describe("nel.3d.landscape.CTileBank", function () {
 
     before("imports", function ( done ) {
         var imports = [
-            "nel/3d/landscape/c_tile_bank",
-            "nel/3d/landscape/c_tile_noise",
+            "nel/3d/landscape/tile/c_tile_bank",
+            "nel/3d/landscape/tile/c_tile_noise",
             "nel/io/buffer",
             "nel/io/read_stream",
             "nel/io/write_stream"

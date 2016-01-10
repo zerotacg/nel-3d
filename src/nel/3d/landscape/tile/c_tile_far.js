@@ -1,5 +1,5 @@
-import FarOrder from "nel/3d/landscape/far_order";
-import FarType from "nel/3d/landscape/far_type";
+import FarOrder from "nel/3d/landscape/tile/far_order";
+import FarType from "nel/3d/landscape/tile/far_type";
 import CRGBA from "nel/misc/c_rgba";
 
 const VERSION = 0;

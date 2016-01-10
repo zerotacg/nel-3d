@@ -1,4 +1,4 @@
-import Border from "nel/3d/landscape/border";
+import Border from "nel/3d/landscape/tile/border";
 import CRGBA from "nel/misc/c_rgba";
 
 const VERSION = 0;

@@ -1,4 +1,4 @@
-import CTileFar from "nel/3d/landscape/c_tile_far";
+import CTileFar from "nel/3d/landscape/tile/c_tile_far";
 
 const HEADER = "FAR_BANK";
 const VERSION = 0;

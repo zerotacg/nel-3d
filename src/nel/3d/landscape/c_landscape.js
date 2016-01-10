@@ -1,5 +1,5 @@
-import CTileBank from "nel/3d/landscape/c_tile_bank";
-import CTileFarBank from "nel/3d/landscape/c_tile_far_bank";
+import CTileBank from "nel/3d/landscape/tile/c_tile_bank";
+import CTileFarBank from "nel/3d/landscape/tile/c_tile_far_bank";
 
 /**
  * @class nl3d.landscape.CLandscape

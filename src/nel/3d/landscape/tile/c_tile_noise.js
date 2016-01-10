@@ -1,4 +1,4 @@
-import CTileNoiseMap from "nel/3d/landscape/c_tile_noise_map";
+import CTileNoiseMap from "nel/3d/landscape/tile/c_tile_noise_map";
 
 const EMPTY_DISPLACEMENT_MAP = "EmptyDisplacementMap";
 

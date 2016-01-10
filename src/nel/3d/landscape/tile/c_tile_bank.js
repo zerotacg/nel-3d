@@ -1,7 +1,7 @@
-import CTile from "nel/3d/landscape/c_tile";
-import CTileLand from "nel/3d/landscape/c_tile_land";
-import CTileNoise from "nel/3d/landscape/c_tile_noise";
-import CTileSet from "nel/3d/landscape/c_tile_set";
+import CTile from "nel/3d/landscape/tile/c_tile";
+import CTileLand from "nel/3d/landscape/tile/c_tile_land";
+import CTileNoise from "nel/3d/landscape/tile/c_tile_noise";
+import CTileSet from "nel/3d/landscape/tile/c_tile_set";
 
 const VERSION = 4;
 
