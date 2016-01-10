@@ -45,15 +45,31 @@
     "sinon-chai": "^2.8.0"
   },
   "jspm": {
+    "name": "nel/3d",
+    "directories": {
+      "lib": "src/nel/3d"
+    },
     "dependencies": {
-      "three": "mrdoob/three.js@master",
-      "nel-io": "zerotacg/nel-io@master",
-      "nel-misc": "zerotacg/nel-misc@master"
+      "nel/io": "zerotacg/nel-io@master",
+      "nel/misc": "zerotacg/nel-misc@master",
+      "three": "mrdoob/three.js@master"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
+    },
+    "overrides": {
+      "github:zerotacg/nel-io@master": {
+        "directories": {
+          "lib": "src/nel/io"
+        }
+      },
+      "github:zerotacg/nel-misc@master": {
+        "directories": {
+          "lib": "src/nel/misc"
+        }
+      }
     }
   }
 }
