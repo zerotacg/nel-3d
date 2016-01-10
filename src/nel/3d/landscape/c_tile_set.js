@@ -1,3 +1,5 @@
+import Bitmap from "nel/3d/landscape/bitmap";
+import CTileBorder from "nel/3d/landscape/c_tile_border";
 import CTileSetTransition from "nel/3d/landscape/c_tile_set_transition";
 import Displacement from "nel/3d/landscape/displacement";
 import Transition from "nel/3d/landscape/transition";
@@ -31,6 +33,9 @@ export default class CTileSet {
         this.displacement_bitmaps = new Array(Displacement.count);
         this.name = undefined;
         this.tile_transitions = this.createTileTransitions();
+        this.borders_128 = this.createBorders(2);
+        this.borders_256 = this.createBorders(2);
+        this.border_transitions = this.createBorderTransitions();
     }
 
     createTileTransitions() {
@@ -41,16 +46,26 @@ export default class CTileSet {
         return array;
     }
 
-    readFrom(stream) {
-        var version;
+    createBorderTransitions() {
+        var length = Transition.count;
+        var array = new Array(length);
+        for( var i = 0; i < length; ++i) {
+            array[i] = this.createBorders(Bitmap.count);
+        }
+        return array;
+    }
 
-        version = stream.readVersion();
-        if ( version !== VERSION ) {
-            var message = `The version in stream is compatible with this class expected version ${VERSION} but got ${version}`;
-
-            throw new TypeError(message);
+    createBorders(length) {
+        var array = new Array(length);
+        for( var i = 0; i < length; ++i ) {
+            array[i] = new CTileBorder();
         }
 
+        return array;
+    }
+
+    readFrom(stream) {
+        stream.readCheckVersion(VERSION);
 
         this.surcface_data = stream.readUint32();
         this.oriented = stream.readBool();
@@ -58,25 +73,20 @@ export default class CTileSet {
         this.readDisplacementBitmapsFrom(stream);
 
         this.name = stream.readString();
-        //f.serialCont (_Tile128);
-        //f.serialCont (_Tile256);
+        this.tiles_128 = stream.readArray( stream.readSint32 );
+        this.tiles_256 = stream.readArray( stream.readSint32 );
 
         this.readTileTransitionsFrom(stream);
 
         this.child_names = stream.readStringArray();
-        //f.serial (_Border128[CTile::diffuse]);
-        //f.serial (_Border128[CTile::additive]);
-        //
-        //f.serial (_Border256[CTile::diffuse]);
-        //f.serial (_Border256[CTile::additive]);
-        //
-        //
-        //for (i=0; i<count; i++)
-        //{
-        //    f.serial (_BorderTransition[i][CTile::diffuse]);
-        //    f.serial (_BorderTransition[i][CTile::additive]);
-        //    f.serial (_BorderTransition[i][CTile::alpha]);
-        //}
+
+        stream.read(this.borders_128[Bitmap.diffuse]);
+        stream.read(this.borders_128[Bitmap.additive]);
+
+        stream.read(this.borders_256[Bitmap.diffuse]);
+        stream.read(this.borders_256[Bitmap.additive]);
+
+        this.readBorderTransitionsFrom(stream);
     }
 
     readDisplacementBitmapsFrom( stream ) {
@@ -89,8 +99,23 @@ export default class CTileSet {
 
     readTileTransitionsFrom( stream ) {
         var transitions = this.tile_transitions;
-        for ( var i = 0; i < Transition.count; ++i) {
-            stream.read(transitions[i]);
+
+        this.readTransitions(transitions, stream);
+    }
+
+    readTransitions( transitions, stream ) {
+        for ( var i = 0; i < Transition.count; ++i ) {
+            stream.read(transitions[ i ]);
+        }
+    }
+
+    readBorderTransitionsFrom( stream ) {
+        var border_transitions = this.border_transitions;
+        var length = Transition.count;
+        for( var i = 0; i < length; ++i ) {
+            stream.read(border_transitions[i][Bitmap.diffuse]);
+            stream.read(border_transitions[i][Bitmap.additive]);
+            stream.read(border_transitions[i][Bitmap.alpha]);
         }
     }
 

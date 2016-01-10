@@ -42,7 +42,7 @@ describe("nel.3d.landscape.CTileBank", function () {
 
     beforeEach("setup", function () {
         tile_bank = new CTileBank();
-        buffer = new CBuffer(16);
+        buffer = CBuffer.create(16);
         var write_stream = new CWriteStream(buffer);
         write_stream.writeString("BANK");
         write_stream.writeVersion(4);

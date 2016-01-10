@@ -8,7 +8,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 var geometry = new THREE.BoxGeometry(1, 1, 1);
-var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
@@ -25,12 +25,21 @@ var render = function () {
 
 //render();
 
+import CTileBank from "nel/3d/landscape/c_tile_bank";
 import CSceneUser from "nel/3d/scene/c_scene_user";
 import ZFunction from "nel/3d/material/z_function";
 import CReadFile from "nel/io/c_read_file";
 import CRGBA from "nel/misc/c_rgba";
 
 window.CReadFile = CReadFile;
+window.handleFiles = function ( files ) {
+    console.log("set small_bank");
+    var small_bank = window.small_bank = files.item(0);
+    var tile_bank = window.tile_bank = new CTileBank();
+    CReadFile.open(small_bank).then(stream => {
+        tile_bank.readFrom(stream);
+    }).catch(console.error.bind(console, "error"));
+};
 
 function main() {
     /** @type nl3d.scene.UScene */
@@ -55,7 +64,7 @@ function main() {
     landscape.postfixTileFilename(season_suffix);
 
     /** @type {function(progress: number)} */
-    var progress = (progress) => {
+    var progress = ( progress ) => {
         console.log("Progress: ", progress);
     };
     var zonesAdded;

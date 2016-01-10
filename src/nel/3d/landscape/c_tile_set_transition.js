@@ -11,7 +11,7 @@ export default class CTileSetTransition {
      */
     static readFrom( stream ) {
         var instance = new CTileSetTransition();
-        instance.readFrom( stream );
+        instance.readFrom(stream);
 
         return instance;
     }
@@ -24,20 +24,13 @@ export default class CTileSetTransition {
         this.tile = undefined;
     }
 
-    readFrom(stream) {
-        var version;
-
-        version = stream.readVersion();
-        if ( version !== VERSION ) {
-            var message = `The version in stream is compatible with this class expected version ${VERSION} but got ${version}`;
-
-            throw new TypeError(message);
-        }
+    readFrom( stream ) {
+        stream.readCheckVersion(VERSION);
 
         this.tile = stream.readSint32();
     }
 
-    writeTo(stream) {
+    writeTo( stream ) {
         stream.writeVersion(VERSION);
         stream.writeSint32(this.tile);
     }
