@@ -7,6 +7,9 @@
 
     <title>NeL - Landscape</title>
     <script src="../../jspm_packages/system.js"></script>
+    <script>
+        System.config({ baseURL: "../../" });
+    </script>
     <script src="../../config.js"></script>
     <style>
         body {
@@ -21,7 +24,6 @@
 </head>
 <body>
 <script>
-    System.baseURL = "../../";
     System.import("sample/landscape/src/main");
 </script>
 </body>
