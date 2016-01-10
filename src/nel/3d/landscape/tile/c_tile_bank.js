@@ -4,7 +4,6 @@ import CTileNoise from "nel/3d/landscape/tile/c_tile_noise";
 import CTileSet from "nel/3d/landscape/tile/c_tile_set";
 
 const VERSION = 4;
-
 const HEADER = "BANK";
 
 /**
