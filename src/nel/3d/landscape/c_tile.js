@@ -24,8 +24,10 @@ export default class CTile {
     }
 
     readFrom(stream) {
+        stream.readVersion();
     }
 
     writeTo(stream) {
+        stream.writeVersion(VERSION);
     }
 }
