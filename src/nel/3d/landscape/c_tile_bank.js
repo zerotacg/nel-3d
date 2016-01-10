@@ -12,20 +12,17 @@ const HEADER = "BANK";
  * @implements {nlio.IReadable}
  */
 export default class CTileBank {
-    /**
-     *
-     */
+    constructor() {
+        this.displacement_maps = [];
+        this.absolue_path = "";
+        this.tile_lands = [];
+        this.tile_sets = [];
+        this.tiles = [];
+    }
+
     readFrom( stream ) {
-        var version;
-
         stream.readCheckString(HEADER);
-
-        version = stream.readVersion();
-        if ( version !== VERSION ) {
-            var message = `The version in stream is compatible with this class expected version ${VERSION} but got ${version}`;
-
-            throw new TypeError(message);
-        }
+        stream.readCheckVersion(VERSION);
 
         this.readDisplacementMapsFrom(stream);
         this.readAbsolutePathFrom(stream);

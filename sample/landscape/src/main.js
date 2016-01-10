@@ -23,11 +23,14 @@ var render = function () {
     renderer.render(scene, camera);
 };
 
-render();
+//render();
 
 import CSceneUser from "nel/3d/scene/c_scene_user";
 import ZFunction from "nel/3d/material/z_function";
+import CReadFile from "nel/io/c_read_file";
 import CRGBA from "nel/misc/c_rgba";
+
+window.CReadFile = CReadFile;
 
 function main() {
     /** @type nl3d.scene.UScene */
