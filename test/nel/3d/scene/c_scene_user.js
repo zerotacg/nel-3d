@@ -3,7 +3,7 @@ import jspm from "jspm";
 
 var System = jspm.Loader();
 
-describe("nl3d.scene.CSceneUser", function () {
+describe("nel.3d.scene.CSceneUser", function () {
     var CLandscapeUser;
     var CSceneUser;
 

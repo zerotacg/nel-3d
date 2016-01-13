@@ -39,9 +39,7 @@ describe("nel.3d.landscape.zone.CZone", function () {
 
         beforeEach("setup", function () {
             zone = new CZone();
-            buffer = CBuffer.create();
-            buffer.setUint8(0, 4);
-            buffer.setUint32(1, 0x5a4f4e45);
+            buffer = CBuffer.fromValues([4, "ZONE"]);
             stream = new CReadStream(buffer);
         });
 
