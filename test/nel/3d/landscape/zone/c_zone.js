@@ -33,12 +33,10 @@ describe("nel.3d.landscape.zone.CZone", function () {
     });
 
     describe("#readFrom", function () {
-        var zone;
         var buffer;
         var stream;
 
         beforeEach("setup", function () {
-            zone = new CZone();
             buffer = CBuffer.fromValues([ 4, "ZONE" ]);
             stream = new CReadStream(buffer);
         });
@@ -46,26 +44,30 @@ describe("nel.3d.landscape.zone.CZone", function () {
         context("when the version is below 4", function () {
             it("should throw a VersionError", function () {
                 buffer.setUint8(0, 0x00);
-                expect(()=> zone.readFrom(stream)).to.throw(VersionError);
+                expectRead().to.throw(VersionError);
             });
         });
 
+        function expectRead() {
+            return expect(()=> stream.read(CZone));
+        }
+
         context("when the version is 4", function () {
             it("should not throw", function () {
-                expect(()=> zone.readFrom(stream)).to.not.throw(VersionError);
+                expectRead().to.not.throw(VersionError);
             });
         });
 
         context("when the header is not ZONE", function () {
             it("should throw", function () {
                 buffer.setUint32(1, 0);
-                expect(()=> zone.readFrom(stream)).to.throw(TypeError);
+                expectRead().to.throw(TypeError);
             });
         });
 
         context("when the header is ZONE", function () {
             it("should not throw", function () {
-                expect(()=> zone.readFrom(stream)).to.not.throw(TypeError);
+                expectRead().to.not.throw(TypeError);
             });
         });
     });

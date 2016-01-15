@@ -24,9 +24,3 @@ export default class CTileFarBank {
         stream.writeArray(this.tiles);
     }
 }
-
-CTileFarBank.fields = [
-    { type: "check-chars", value: "FAR_BANK" },
-    { type: "version", value: 0 },
-    { type: Array.template(CTileFar), name: "tiles" }
-];
