@@ -25,56 +25,16 @@ var render = function () {
 
 //render();
 
-import CTileBank from "nel/3d/landscape/tile/c_tile_bank";
-import CSceneUser from "nel/3d/scene/c_scene_user";
-import ZFunction from "nel/3d/material/z_function";
+import CZone from "nel/3d/landscape/zone/c_zone";
 import CReadFile from "nel/io/c_read_file";
-import CRGBA from "nel/misc/c_rgba";
 
 window.CReadFile = CReadFile;
 window.handleFiles = function ( files ) {
-    console.log("set small_bank");
-    var small_bank = window.small_bank = files.item(0);
-    var tile_bank = window.tile_bank = new CTileBank();
-    CReadFile.open(small_bank).then(stream => {
-        console.log("reading tile bank");
-        tile_bank.readFrom(stream);
-        console.log("done reading tile bank");
+    console.log("set file");
+    var file = window.file = files.item(0);
+    CReadFile.open(file).then(stream => {
+        console.log("reading");
+        var model = window.model = stream.readModel(CZone);
+        console.log("done reading", model);
     }).catch(console.error.bind(console, "error"));
 };
-
-function main() {
-    /** @type nl3d.scene.UScene */
-    var scene = new CSceneUser();
-    /** @type nl3d.landscape.ULandscape */
-    var landscape = scene.createLandscape();
-
-    landscape.setThreshold(0.0005);
-    landscape.setZFunction(ZFunction.less);
-
-    /** @type nlmisc.CRGBA */
-    var diffuse = new CRGBA(0xff, 0xff, 0xff);
-    /** @type nlmisc.CRGBA */
-    var ambient = new CRGBA(0xff, 0xff, 0xff);
-    landscape.setupStaticLight(diffuse, ambient, 1.0);
-
-    var small_bank = "jungle.smallbank";
-    var season_suffix = "_su"; // summer
-    var far_bank = `jungle${season_suffix}.farbank`;
-    landscape.loadBankFiles(small_bank, far_bank);
-
-    landscape.postfixTileFilename(season_suffix);
-
-    /** @type {function(progress: number)} */
-    var progress = ( progress ) => {
-        console.log("Progress: ", progress);
-    };
-    var zonesAdded;
-    var zonesRemoved;
-    /** @type nel.misc.CVector */
-    var pos;
-    landscape.refreshAllZonesAround(pos, 1000, zonesAdded, zonesRemoved, progress);
-}
-
-
-

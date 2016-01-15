@@ -8,7 +8,7 @@ const VERSION = 0;
  * @implements {nlio.ISerializable}
  */
 export default class CTileFarBank {
-    readFrom(stream) {
+    readFrom( stream ) {
         stream.readCheckChars(HEADER);
 
         stream.readVersion();
@@ -16,11 +16,17 @@ export default class CTileFarBank {
         this.tiles = stream.readArray(CTileFar.readFrom);
     }
 
-    writeTo(stream) {
+    writeTo( stream ) {
         stream.writeChars(HEADER);
 
         stream.writeVersion(VERSION);
 
-        stream.writeArray(CTileFar.writeTo);
+        stream.writeArray(this.tiles);
     }
 }
+
+CTileFarBank.fields = [
+    { type: "check-chars", value: "FAR_BANK" },
+    { type: "version", value: 0 },
+    { type: Array.template(CTileFar), name: "tiles" }
+];

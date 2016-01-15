@@ -84,3 +84,11 @@ export default class CTileFar {
         stream.writeArray(pixels[additive][order2], CRGBA.writeTo);
     }
 }
+
+CTileFar.fields = [
+    { type: "version", value: 0 },
+    { type: Array.template(CRGBA), name: "pixels"}
+];
+// vector<CRGBA>[FarType.count][FarOrder.count]
+// Array.template({ dimensions: [FarType.count, FarOrder.count], value_type: Array.template(CRGBA)})
+// Map.template({ keys: ["diffuse", "additive"], value_type: Map.template({ keys: ["order0", "order1", "order2"], value_type: Array.template(CRGBA)})})
