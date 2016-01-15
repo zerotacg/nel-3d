@@ -1,10 +1,11 @@
 import CBorderVertex from "nel/3d/landscape/zone/c_border_vertex";
 import CPatch from "nel/3d/landscape/zone/c_patch";
+import AModel from "nel/io/a_model";
 import { CheckVersion } from "nel/io/read_stream";
 import { CheckChars } from "nel/io/read_stream";
-import { uint16 } from "nel/io/read_stream";
-import { sint32 } from "nel/io/read_stream";
-import { float } from "nel/io/read_stream";
+import { uint16 } from "nel/io/types";
+import { sint32 } from "nel/io/types";
+import { float } from "nel/io/types";
 import CAABB from "nel/misc/c_aabb";
 import CArray from "nel/misc/c_array";
 import CVector from "nel/misc/c_vector";
@@ -16,18 +17,7 @@ const HEADER = "ZONE";
  * @class nl3d.landscape.zone.CZone
  * @implements nlio.ISerializable
  */
-export default class CZone {
-    static readFrom(stream) {
-
-    }
-
-    static create( data ) {
-        return new CZone(data);
-    }
-
-    constructor( config ) {
-        Object.assign(this, config);
-    }
+export default class CZone extends AModel {
 }
 
 CZone.fields = [

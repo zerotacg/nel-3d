@@ -1,8 +1,9 @@
 import CTileColor from "nel/3d/landscape/zone/c_tile_color";
 import CTileElement from "nel/3d/landscape/zone/c_tile_element";
 import CTileLightInfluence from "nel/3d/landscape/zone/c_tile_light_influence";
+import AModel from "nel/io/a_model";
 import { CheckVersion } from "nel/io/read_stream";
-import { uint8 } from "nel/io/read_stream";
+import { uint8 } from "nel/io/types";
 import CArray from "nel/misc/c_array";
 import CVector3s from "nel/misc/c_vector_3s";
 
@@ -12,18 +13,7 @@ const VERSION = 7;
  * @class nl3d.landscape.zone.CPatch
  * @implements nlio.ISerializable
  */
-export default class CPatch {
-    static readFrom(stream) {
-        return stream.readModel(CPatch);
-    }
-
-    static create( data ) {
-        return new CPatch(data);
-    }
-
-    constructor( config ) {
-        Object.assign(this, config);
-    }
+export default class CPatch extends AModel {
 }
 
 CPatch.fields = [

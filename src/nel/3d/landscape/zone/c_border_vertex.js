@@ -1,5 +1,6 @@
+import AModel from "nel/io/a_model";
 import { CheckVersion } from "nel/io/read_stream";
-import { uint16 } from "nel/io/read_stream";
+import { uint16 } from "nel/io/types";
 
 const VERSION = 0;
 
@@ -7,18 +8,7 @@ const VERSION = 0;
  * @class nl3d.landscape.zone.CBorderVertex
  * @implements nlio.ISerializable
  */
-export default class CBorderVertex {
-    static readFrom(stream) {
-        return stream.readModel(CBorderVertex);
-    }
-
-    static create( data ) {
-        return new CBorderVertex(data);
-    }
-
-    constructor( config ) {
-        Object.assign(this, config);
-    }
+export default class CBorderVertex extends AModel {
 }
 
 CBorderVertex.fields = [

@@ -34,7 +34,7 @@ window.handleFiles = function ( files ) {
     var file = window.file = files.item(0);
     CReadFile.open(file).then(stream => {
         console.log("reading");
-        var model = window.model = stream.readModel(CZone);
+        var model = window.model = stream.read(CZone);
         console.log("done reading", model);
     }).catch(console.error.bind(console, "error"));
 };

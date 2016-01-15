@@ -1,22 +1,11 @@
-import { uint16 } from "nel/io/read_stream";
-import CArray from "nel/misc/c_array";
+import AModel from "nel/io/a_model";
+import { uint16 } from "nel/io/types";
 
 /**
  * @class nl3d.landscape.zone.CTileColor
  * @implements nlio.ISerializable
  */
-export default class CTileColor {
-    static readFrom(stream) {
-        return stream.readModel(CTileColor);
-    }
-
-    static create( data ) {
-        return new CTileColor(data);
-    }
-
-    constructor( config ) {
-        Object.assign(this, config);
-    }
+export default class CTileColor extends AModel {
 }
 
 CTileColor.fields = [
