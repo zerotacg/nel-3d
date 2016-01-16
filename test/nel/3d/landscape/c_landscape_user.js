@@ -12,6 +12,8 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
     var CLandscapeUser;
     var CReadFile;
 
+    this.timeout(5000);
+
     before("imports", function ( done ) {
         var imports = [
             "nel/3d/landscape/c_landscape",
