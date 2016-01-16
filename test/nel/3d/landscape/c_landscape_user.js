@@ -24,8 +24,7 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
                 CLandscapeUser = modules[ 1 ].default;
                 CReadFile = modules[ 2 ].default;
             })
-            .then(done)
-            .catch(done)
+            .then(done, done)
         ;
     });
 
@@ -135,59 +134,42 @@ describe("nel.3d.landscape.CLandscapeUser", function () {
             path[ far_bank ] = far_bank_stream;
 
             landscape_user.path = path;
+            landscape_user.loadBankFiles(small_bank, far_bank);
         });
 
         it("should call releasing of tiles on model", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.releaseAllTiles).to.have.been.called;
         });
 
         it("should clear the tile bank", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_bank.clear).to.have.been.called;
         });
 
         it("should serialize the tile bank", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_bank.readFrom).to.have.been.calledWith(small_bank_stream);
         });
 
         it("should call makeAllPathsRelative", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_bank.makeAllPathsRelative).to.have.been.called;
         });
 
         it("should call makeAllExtensionsDDS", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_bank.makeAllExtensionsDDS).to.have.been.called;
         });
 
         it("should set absolute path on tile bank to empty string", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_bank.setAbsPath).to.have.been.calledWith("");
         });
 
         it("should serialize the tile far bank", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(landscape.tile_far_bank.readFrom).to.have.been.calledWith(far_bank_stream);
         });
 
         it("should close the tile bank file", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(small_bank_stream.close).to.have.been.called;
         });
 
         it("should close the tile bank file", function () {
-            landscape_user.loadBankFiles(small_bank, far_bank);
-
             expect(far_bank_stream.close).to.have.been.called;
         });
     });
